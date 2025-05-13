@@ -28,3 +28,13 @@ for j in range(max_bins):
 model.writeLP("bin_packing_model.lp")
 
 print("Modelo exportado como 'bin_packing_model.lp'.")
+
+# Resolver
+model.solve()
+
+# Resultado
+print(f"Status: {pl.LpStatus[model.status]}")
+for j in range(max_bins):
+    if pl.value(y[j]) > 0.5:
+        items_in_bin = [i for i in range(num_items) if pl.value(x[i, j]) > 0.5]
+        print(f"Bin {j}: Items {items_in_bin}")
